@@ -121,7 +121,7 @@ export function download(argv) {
 
       const name = renameDoc(repo)
 
-      retrieveAllMDs(
+      retrieveAllMDsFromZip(
         {
           repo,
           path,
