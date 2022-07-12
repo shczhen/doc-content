@@ -1,0 +1,10 @@
+{
+  "name": "doc-content",
+  "version": "1.0.0",
+  "repository": "git@github.com:shczhen/doc-content.git",
+  "author": "czhen <56986964+shczhen@users.noreply.github.com>",
+  "license": "MIT",
+  "workspaces":[
+    "packages/*"
+  ]
+}
