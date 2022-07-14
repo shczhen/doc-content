@@ -58,20 +58,19 @@ export function download(argv) {
 
   switch (repo) {
     case "pingcap/docs-cn":
+      const docsCnDestPath = genDest(
+        repo,
+        path,
+        nPath.resolve(dest, `${repo.endsWith("-cn") ? "zh" : "en"}/tidb/${ref}`)
+      );
+      rimraf.sync(docsCnDestPath);
       retrieveAllMDsFromZip(
         {
           repo,
           path,
           ref,
         },
-        genDest(
-          repo,
-          path,
-          nPath.resolve(
-            dest,
-            `${repo.endsWith("-cn") ? "zh" : "en"}/tidb/${ref}`
-          )
-        ),
+        destPath,
         options
       );
       break;
@@ -81,30 +80,38 @@ export function download(argv) {
         refDataList.shift();
         const refLang = refDataList.shift();
         const refVer = refDataList.join("-");
+        const docsDestPath = genDest(
+          repo,
+          path,
+          nPath.resolve(dest, `${refLang}/tidb/${refVer}`)
+        );
+        rimraf.sync(docsDestPath);
         retrieveAllMDsFromZip(
           {
             repo,
             path,
             ref,
           },
-          genDest(repo, path, nPath.resolve(dest, `${refLang}/tidb/${refVer}`)),
+          docsDestPath,
           options
         );
       } else {
+        const docsDestPath = genDest(
+          repo,
+          path,
+          nPath.resolve(
+            dest,
+            `${repo.endsWith("-cn") ? "zh" : "en"}/tidb/${ref}`
+          )
+        );
+        rimraf.sync(docsDestPath);
         retrieveAllMDsFromZip(
           {
             repo,
             path,
             ref,
           },
-          genDest(
-            repo,
-            path,
-            nPath.resolve(
-              dest,
-              `${repo.endsWith("-cn") ? "zh" : "en"}/tidb/${ref}`
-            )
-          ),
+          docsDestPath,
           options
         );
       }
@@ -120,6 +127,12 @@ export function download(argv) {
       }
 
       const name = renameDoc(repo);
+      const dmOpDestPath = genDest(
+        repo,
+        path,
+        nPath.resolve(dest, `${path.split("/")[0]}/${name}/${ref}`)
+      );
+      rimraf.sync(dmOpDestPath);
 
       retrieveAllMDs(
         {
@@ -127,11 +140,7 @@ export function download(argv) {
           path,
           ref,
         },
-        genDest(
-          repo,
-          path,
-          nPath.resolve(dest, `${path.split("/")[0]}/${name}/${ref}`)
-        ),
+        dmOpDestPath,
         options
       );
 
