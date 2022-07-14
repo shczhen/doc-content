@@ -24,7 +24,6 @@ on:
 
 concurrency:
   group: update-${{ inputs.repo }}-${{ inputs.branch }}
-  cancel-in-progress: true
 
 jobs:
   build:
