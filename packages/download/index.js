@@ -70,7 +70,7 @@ export function download(argv) {
           path,
           ref,
         },
-        destPath,
+        docsCnDestPath,
         options
       );
       break;
