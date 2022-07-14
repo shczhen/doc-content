@@ -22,11 +22,9 @@ on:
         default: false
         required: false
 
-concurrency:
-  group: update-${{ inputs.repo }}-${{ inputs.branch }}
-
 jobs:
   build:
+    concurrency: update-${{ inputs.repo }}-${{ inputs.branch }}
     runs-on: ubuntu-latest
 
     steps:
